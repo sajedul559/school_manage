@@ -15,6 +15,8 @@ class CreateRollsTable extends Migration
     {
         Schema::create('rolls', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('admission_id')->constrained('admissions');
+            $table->string('roll_no');
             $table->timestamps();
         });
     }

@@ -15,6 +15,10 @@ class CreateLevelsTable extends Migration
     {
         Schema::create('levels', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->text('description')->nullable();
+            $table->boolean('status')->default(1);
+            
             $table->timestamps();
         });
     }

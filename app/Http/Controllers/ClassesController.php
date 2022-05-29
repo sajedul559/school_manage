@@ -13,7 +13,7 @@ class ClassesController extends Controller
 
     public function index(): View
     {
-        return view('admins.classess.index', ['classess' => Classes::get()]);
+        return view('admins.classes.index', ['classess' => Classes::get()]);
     }
 
 
