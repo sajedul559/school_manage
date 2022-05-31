@@ -1,4 +1,4 @@
-<div class="col-md-12 col-lg-12">
+<div class="col-md-11 col-lg-11">
     <div class="card">
         <div class="card-body p-b-0">
         <!-- Nav tabs -->

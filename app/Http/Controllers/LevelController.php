@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Level;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Jambasangsang\Service\Levels\LevelService;
 
 
 class LevelController extends Controller
@@ -23,9 +24,12 @@ class LevelController extends Controller
     }
 
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, LevelService $levelService): RedirectResponse
     {
-        return redirect()->route('levels.index');
+      
+        $this->validated($request);
+        $levelService->storeLevelData( new Level(), $request);
+        return redirect()->route('levels.index')->with('message','Data added Successfully');;
     }
 
 
@@ -46,8 +50,20 @@ class LevelController extends Controller
     }
 
 
-    public function destroy(Level $level): RedirectResponse
+    public function destroy(Level $level, LevelService $levelService): RedirectResponse
     {
-        return redirect()->route('levels.index');
+        $levelService->deleteLevelData($level );
+        return redirect()->route('levels.index')->with('message','Data added Successfully');
+    }
+    
+
+    protected function validated($request)
+    {
+        return $this->validate($request,[
+            'level_name' => 'required| min:10',
+            'level_status' => 'required|min:1',
+            'description' =>  'nullable|max:200'
+        ]);
     }
 }
+

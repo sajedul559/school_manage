@@ -13,6 +13,16 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0- 
+     alpha/css/bootstrap.css" rel="stylesheet">
+	
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" 
+     href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- ================= Favicon ================== -->
@@ -38,6 +48,7 @@
     <link href="{{ asset('jambasangsang/assets/css/lib/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('jambasangsang/assets/css/lib/helper.css') }}" rel="stylesheet">
     <link href="{{ asset('jambasangsang/assets/css/style.css') }}" rel="stylesheet">
+    @stack('style')
 </head>
 
 <body>
@@ -57,6 +68,13 @@
                 <div class="container-fluid">
 
                     <section id="main-content">
+                    @if ($errors->any())
+                        @foreach ($errors->all() as  $error)
+                        <x-alerts.alert :error="$error"></x-alerts.alert>
+                            
+                        @endforeach
+                        
+                    @endif
                     @yield('content')
                     </section>
                 </div>
@@ -92,6 +110,44 @@
         <script src="{{ asset('jambasangsang/assets/js/lib/owl-carousel/owl.carousel-init.js') }}"></script>
         <!-- scripit init-->
         <script src="{{ asset('jambasangsang/assets/js/dashboard2.js') }}"></script>
+        <script>
+            @if(Session::has('message'))
+            toastr.options =
+            {
+                "closeButton" : true,
+                "progressBar" : true
+            }
+                    toastr.success("{{ session('message') }}");
+            @endif
+          
+            @if(Session::has('error'))
+            toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+                toastr.error("{{ session('error') }}");
+        @endif
+      
+        @if(Session::has('info'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+                toastr.info("{{ session('info') }}");
+        @endif
+      
+        @if(Session::has('warning'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+                toastr.warning("{{ session('warning') }}");
+        @endif
+      </script>
+        @stack('script')
 
 </body>
 
